@@ -1,0 +1,8 @@
+en:
+  vagrant_smartos:
+    config:
+      hypervisor_required: |-
+        A hypervisor must be specified
+
+      image_uuid_required: |-
+        An image_uuid value is required
