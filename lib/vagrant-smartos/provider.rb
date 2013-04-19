@@ -15,10 +15,8 @@ module VagrantPlugins
       autoload :MessageNotCreated,      action_root.join("message_not_created")
       autoload :ReadState,              action_root.join("read_state")
       autoload :RunInstance,            action_root.join("run_instance")
-      # autoload :SyncFolders, action_root.join("sync_folders")
-      # autoload :TimedProvision, action_root.join("timed_provision")
-      # autoload :WarnNetworks, action_root.join("warn_networks")
-      autoload :TerminateInstance, action_root.join("terminate_instance")
+      autoload :SyncFolders,            action_root.join("sync_folders")
+      autoload :TerminateInstance,      action_root.join("terminate_instance")
 
       def initialize(machine)
         @machine = machine
@@ -34,10 +32,8 @@ module VagrantPlugins
               next
             end
 
-#            b2.use SyncFolders
+            b2.use SyncFolders
             b2.use RunInstance
-
-
           end
         end
       end
@@ -52,7 +48,18 @@ module VagrantPlugins
       end
 
       def action_provision
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use Call, IsCreated do |env, b2|
+            if !env[:result]
+              b2.use MessageNotCreated
+              next
+            end
 
+            b2.use Provision
+            b2.use SyncFolders
+          end
+        end
       end
 
       def action_read_ssh_info
@@ -72,10 +79,31 @@ module VagrantPlugins
       end
 
       def action_ssh
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use Call, IsCreated do |env, b2|
+            if !env[:result]
+              b2.use MessageNotCreated
+              next
+            end
 
+            b2.use SSHExec
+          end
+        end
       end
 
       def action_ssh_run
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use Call, IsCreated do |env, b2|
+            if !env[:result]
+              b2.use MessageNotCreated
+              next
+            end
+
+            b2.use SSHRun
+          end
+        end
 
       end
 
@@ -87,6 +115,12 @@ module VagrantPlugins
           action_read_state
         when :destroy
           action_destroy
+        when :ssh
+          action_ssh
+        when :ssh_run
+          action_ssh_run
+        when :provision
+          action_provision
         end
       end
 
