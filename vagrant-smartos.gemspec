@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Vagrant::Smartos::VERSION
   gem.authors       = ["Thomas Haggett"]
   gem.email         = ["thomas@haggett.org"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{SmartOS Hypervisor provider for Vagrant}
+  gem.summary       = %q{SmartOS Hypervisor provider for Vagrant}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)

@@ -6,3 +6,33 @@ en:
 
       image_uuid_required: |-
         An image_uuid value is required
+
+    states:
+      running_short: |-
+        Running
+      running_long: |-
+        Running
+
+    not_created: |-
+      Not CREATED!
+
+    already_created: |-
+      ALREADY CREATED!
+
+    launching_instance: |-
+      Yo, launching an instance, innit.
+
+    waiting_for_ready: |-
+      Yar, this is taking time. Hang on...
+
+    waiting_for_ssh: |-
+      FFS. Should be done now. Still farting around with SSH.
+
+    ready: |-
+      Finally, the bastard is ready.
+
+    rsync_folder: |-
+      Fucker is out of date. Updating.
+
+    terminating: |- 
+      Yeah, I didn't really like it either.

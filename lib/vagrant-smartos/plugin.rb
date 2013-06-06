@@ -25,7 +25,7 @@ module VagrantPlugins
         Config
       end
 
-      provider(:smartos) do
+      provider(:smartos, :parallel => true) do
         # Setup logging and i18n
         setup_logging
         setup_i18n
