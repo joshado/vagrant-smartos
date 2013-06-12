@@ -37,7 +37,7 @@ Also, right now it uses a dummy box to get vagrant to play ball, whilst requirin
 
 There are two specific parameters required for the SmartOS provider (`hypervisor` and `image_uuid`) and a bunch of optional ones, you should be able to work it out:
 
-   Vagrant.require_plugin "vagrant-smartos"
+    Vagrant.require_plugin "vagrant-smartos"
 
     Vagrant.configure("2") do |config|
 
