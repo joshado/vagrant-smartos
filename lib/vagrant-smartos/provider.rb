@@ -16,6 +16,7 @@ module VagrantPlugins
       autoload :ReadState,              action_root.join("read_state")
       autoload :RunInstance,            action_root.join("run_instance")
       autoload :SyncFolders,            action_root.join("sync_folders")
+      autoload :ReloadInstance,         action_root.join("reload_instance")
       autoload :TerminateInstance,      action_root.join("terminate_instance")
 
       def initialize(machine)
@@ -45,6 +46,14 @@ module VagrantPlugins
           b.use TerminateInstance
         end
 
+      end
+
+      def action_reload
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use ConnectHypervisor
+          b.use ReloadInstance
+        end
       end
 
       def action_provision
@@ -121,6 +130,8 @@ module VagrantPlugins
           action_ssh_run
         when :provision
           action_provision
+        when :reload
+          action_reload
         end
       end
 

@@ -8,7 +8,7 @@ module VagrantPlugins
   module Smartos
     class Provider
       # This middleware uses `rsync` to sync the folders over to the
-      # AWS instance.
+      # zone.
       class SyncFolders
         include Vagrant::Util::ScopedHashOverride
 
@@ -35,9 +35,7 @@ module VagrantPlugins
             # avoid creating an additional directory with rsync
             hostpath = "#{hostpath}/" if hostpath !~ /\/$/
 
-            env[:ui].info(I18n.t("vagrant_smartos.rsync_folder",
-                                :hostpath => hostpath,
-                                :guestpath => guestpath))
+            env[:ui].info(I18n.t("vagrant_smartos.rsync_folder", :hostpath => hostpath, :guestpath => guestpath))
 
             # Create the guest path
             env[:machine].communicate.sudo("mkdir -p '#{guestpath}'")
@@ -54,10 +52,7 @@ module VagrantPlugins
 
             r = Vagrant::Util::Subprocess.execute(*command)
             if r.exit_code != 0
-              raise Errors::RsyncError,
-                :guestpath => guestpath,
-                :hostpath => hostpath,
-                :stderr => r.stderr
+              raise Errors::RsyncError, :guestpath => guestpath, :hostpath => hostpath, :stderr => r.stderr
             end
           end
         end

@@ -1,4 +1,3 @@
-puts "I GOT LOADED"
 begin
   require "vagrant"
 rescue LoadError

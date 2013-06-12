@@ -3,13 +3,10 @@ Vagrant.require_plugin "vagrant-smartos"
 Vagrant.configure("2") do |config|
   config.vm.box = "smartos-dummy"
 
-
-  config.vm.provision :shell, :inline => "pkgin -y install ruby193-base"
-
   config.vm.provider :smartos do |smartos, override|
 
     smartos.hypervisor = "root@172.16.251.129"
-    smartos.image_uuid = "cf7e2f40-9276-11e2-af9a-0bad2233fb0b"
+    smartos.image_uuid = "9eac5c0c-a941-11e2-a7dc-57a6b041988f"
 
     smartos.ip_address = "172.16.251.18"
     smartos.subnet_mask = "255.255.255.0"

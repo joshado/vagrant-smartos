@@ -24,6 +24,7 @@ module VagrantPlugins
           subnet_mask = "255.255.255.0"
           gateway = "172.16.251.2"
 
+
           nic = {
             "nic_tag" => env[:machine].provider_config.nic_tag,
             "ip" => env[:machine].provider_config.ip_address,
@@ -55,7 +56,10 @@ module VagrantPlugins
           # Launch!
           env[:ui].info(I18n.t("vagrant_smartos.launching_instance"))
 
-          env[:hyp].exec("vmadm create <<JSON\n#{JSON.dump(machine_json)}\nJSON")
+          output = env[:hyp].exec("vmadm create <<JSON\n#{JSON.dump(machine_json)}\nJSON")
+          if output.exit_code != 0 || output.stderr.chomp != "Successfully created #{env[:machine].id}"
+            raise Errors::VmadmError, :message => I18n.t("vagrant_smartos.errors.vmadm_create", :output => output.stderr.chomp)
+          end
 
           env[:ui].info(I18n.t("vagrant_smartos.waiting_for_ready"))
           while true

@@ -27,17 +27,20 @@ module VagrantPlugins
           @app.call(env)
         end
 
-        def read_state(hyp, machine)
-          begin
-            output = hyp.exec("vmadm get #{machine.id}")
-          rescue SshWrapper::UnexpectedExitCode
-            return :not_created
-          end
 
-          if output.chomp == ""
+        # Internal: Reads the current state of the machine from the hypervisor
+        #
+        #  hyp     - the hypervisor connection object
+        #  machine - the Vagrant machine object
+        #
+        # Returns a hash of data returned by vmadm, or nil if the VM isn't found
+        def read_state(hyp, machine)
+          output = hyp.exec("vmadm get #{machine.id}")
+
+          if output.exit_code != 0 || output.stderr.chomp =~ /No such zone configured/ || output.stdout == ""
             nil
           else
-            JSON.load(output)
+            JSON.load(output.stdout)
           end
         end
       end

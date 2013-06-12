@@ -1,5 +1,13 @@
 en:
   vagrant_smartos:
+
+    errors:
+      vmadm: |-
+        Error when running vmadm on the hypervisor: %{message}
+
+      vmadm_create: |-
+        `vmadm create` returned: '%{output}'
+
     config:
       hypervisor_required: |-
         A hypervisor must be specified
@@ -8,31 +16,31 @@ en:
         An image_uuid value is required
 
     states:
-      running_short: |-
+      short_running: |-
         Running
-      running_long: |-
-        Running
+      long_running: |-
+        running
 
     not_created: |-
-      Not CREATED!
+      Zone hasn't been created yet
 
     already_created: |-
-      ALREADY CREATED!
+      Zone already created
 
     launching_instance: |-
-      Yo, launching an instance, innit.
+      Launching SmartOS zone
 
     waiting_for_ready: |-
-      Yar, this is taking time. Hang on...
+      Waiting for zone to be ready
 
     waiting_for_ssh: |-
-      FFS. Should be done now. Still farting around with SSH.
+      Waiting for SSH
 
     ready: |-
-      Finally, the bastard is ready.
+      Zone is ready
 
     rsync_folder: |-
-      Fucker is out of date. Updating.
+      Updating the rsync shared folder
 
     terminating: |- 
-      Yeah, I didn't really like it either.
+      Shutting down the zone
