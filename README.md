@@ -32,6 +32,10 @@ Also, right now it uses a dummy box to get vagrant to play ball, whilst requirin
 
   `vagrant up --provider=smartos`
 
+* Now, try logging in :)
+
+  `vagrant ssh`
+
 
 ## Example Vagrantfile and options
 
@@ -50,7 +54,7 @@ There are two specific parameters required for the SmartOS provider (`hypervisor
         smartos.hypervisor = "root@172.16.251.129"
 
         # Required: This is the UUID of the SmartOS image to use for the VMs. 
-        # It must already be imported before running vagrant.
+        # It must already be imported using `imgadm` before running `vagrant up`.
         smartos.image_uuid = "cf7e2f40-9276-11e2-af9a-0bad2233fb0b"  # this is base64:1.9.1
 
         # Optional: The RAM allocation for the machine, defaults to the SmartOS default (256MB)
@@ -97,3 +101,9 @@ There are two specific parameters required for the SmartOS provider (`hypervisor
       #
 
     end
+
+
+
+## Problems, fixes?
+
+Open an issue, or even better, a pull request :D
