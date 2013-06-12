@@ -16,22 +16,18 @@ module VagrantPlugins
 
         def call(env)
 
-          image_uuid = 
-
-          vlan = "" #104
-          nic_tag = "admin"
-          ip_address = "172.16.251.120"
-          subnet_mask = "255.255.255.0"
-          gateway = "172.16.251.2"
-
-
           nic = {
             "nic_tag" => env[:machine].provider_config.nic_tag,
             "ip" => env[:machine].provider_config.ip_address,
-            "netmask" => env[:machine].provider_config.subnet_mask,
+            "netmask" =>env[:machine].provider_config.subnet_mask,
             "gateway" => env[:machine].provider_config.gateway,
             "primary" => true
           }
+
+          # Make sure we don't pass empty-string gateway / netmask to vmadm, as it isn't happy with this
+          nic.delete("netmask") if nic['netmask'].nil? || nic['netmask'].length == 0
+          nic.delete("gateway") if nic['gateway'].nil? || nic['gateway'].length == 0
+
 
           if env[:machine].provider_config.vlan
             nic["vlan_id"] = env[:machine].provider_config.vlan
@@ -51,7 +47,6 @@ module VagrantPlugins
               "user-script" => "useradd -s /usr/bin/bash -m vagrant && passwd -N vagrant && mkdir -p ~vagrant/.ssh && echo 'vagrant ALL=NOPASSWD: ALL' >> /opt/local/etc/sudoers && echo 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key' >> ~vagrant/.ssh/authorized_keys"
             }
           }
-
 
           # Launch!
           env[:ui].info(I18n.t("vagrant_smartos.launching_instance"))

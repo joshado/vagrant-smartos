@@ -20,7 +20,6 @@ module VagrantPlugins
           if env[:machine].state.id != :not_created
             env[:ui].info(I18n.t("vagrant_smartos.terminating"))
             output = env[:hyp].exec("vmadm destroy #{vm_uuid}")
-            puts "#{output.command}:\n\tstderr=#{output.stderr}\n\tstdout=#{output.stdout}"
             env[:machine].id = nil
           end
         end

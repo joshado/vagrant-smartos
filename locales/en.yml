@@ -15,11 +15,21 @@ en:
       image_uuid_required: |-
         An image_uuid value is required
 
+      static_gateway_required: |-
+        A gateway value is required if a static IP address is used
+
+      static_netmask_required: |-
+        A network mask value is required if a static IP address is used
+
     states:
       short_running: |-
         Running
       long_running: |-
         running
+      short_not_created: |-
+        not created
+      long_not_created: |-
+        The zone has not been created
 
     not_created: |-
       Zone hasn't been created yet

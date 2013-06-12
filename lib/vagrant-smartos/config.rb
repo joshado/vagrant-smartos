@@ -30,7 +30,7 @@ module VagrantPlugins
         @hypervisor = nil if @hypervisor == UNSET_VALUE
         @image_uuid = nil if @image_uuid == UNSET_VALUE
         @nic_tag = "admin" if @nic_tag == UNSET_VALUE
-        @ip_address = nil if @ip_address == UNSET_VALUE
+        @ip_address = "dhcp" if @ip_address == UNSET_VALUE
         @subnet_mask = nil if @subnet_mask == UNSET_VALUE
         @gateway = nil if @gateway == UNSET_VALUE
         @vlan = nil if @vlan == UNSET_VALUE
@@ -46,9 +46,10 @@ module VagrantPlugins
 
         errors << I18n.t("vagrant_smartos.config.hypervisor_required") if @hypervisor.nil?
         errors << I18n.t("vagrant_smartos.config.image_uuid_required") if @image_uuid.nil?
-        errors << I18n.t("vagrant_smartos.config.ip_address_required") if @ip_address.nil?
-        errors << I18n.t("vagrant_smartos.config.subnet_mask_required") if @subnet_mask.nil?
-        errors << I18n.t("vagrant_smartos.config.gateway_required") if @gateway.nil?
+        unless @ip_address == "dhcp"
+          errors << I18n.t("vagrant_smartos.config.static_netmask_requied") if @subnet_mask.nil?
+          errors << I18n.t("vagrant_smartos.config.static_gateway_required") if @gateway.nil?
+        end
 
         { "SmartOS Provider" => errors }
       end
