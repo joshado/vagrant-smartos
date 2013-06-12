@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["thomas@haggett.org"]
   gem.description   = %q{SmartOS Hypervisor provider for Vagrant}
   gem.summary       = %q{SmartOS Hypervisor provider for Vagrant}
-  gem.homepage      = ""
+  gem.homepage      = "http://github.com/joshado/vagrant-smartos/"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
