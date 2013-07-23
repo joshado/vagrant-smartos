@@ -11,11 +11,12 @@ module VagrantPlugins
       # @return [String] UUID
       attr_accessor :image_uuid
 
-      attr_accessor :nic_tag, :ip_address, :subnet_mask, :gateway, :vlan, :ram, :quota
+      attr_accessor :resolvers, :nic_tag, :ip_address, :subnet_mask, :gateway, :vlan, :ram, :quota
 
       def initialize
         @hypervisor = UNSET_VALUE
         @image_uuid = UNSET_VALUE
+	@resolvers = UNSET_VALUE
         @nic_tag = UNSET_VALUE
         @ip_address = UNSET_VALUE
         @subnet_mask = UNSET_VALUE
@@ -29,6 +30,7 @@ module VagrantPlugins
       def finalize!
         @hypervisor = nil if @hypervisor == UNSET_VALUE
         @image_uuid = nil if @image_uuid == UNSET_VALUE
+        @resolvers = ["8.8.8.8", "8.8.4.4"] if @resolvers == UNSET_VALUE
         @nic_tag = "admin" if @nic_tag == UNSET_VALUE
         @ip_address = "dhcp" if @ip_address == UNSET_VALUE
         @subnet_mask = nil if @subnet_mask == UNSET_VALUE
