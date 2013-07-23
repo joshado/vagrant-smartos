@@ -52,7 +52,7 @@ module VagrantPlugins
           env[:ui].info(I18n.t("vagrant_smartos.launching_instance"))
 
           output = env[:hyp].exec("vmadm create <<JSON\n#{JSON.dump(machine_json)}\nJSON")
-          if output.exit_code != 0 || output.stderr.chomp != "Successfully created #{env[:machine].id}"
+          if output.exit_code != 0 || !output.stderr.match("Successfully")
             raise Errors::VmadmError, :message => I18n.t("vagrant_smartos.errors.vmadm_create", :output => output.stderr.chomp)
           end
 
