@@ -11,7 +11,7 @@ module VagrantPlugins
       # @return [String] UUID
       attr_accessor :image_uuid
 
-      attr_accessor :nic_tag, :ip_address, :subnet_mask, :gateway, :vlan, :ram, :quota
+      attr_accessor :nic_tag, :ip_address, :subnet_mask, :gateway, :vlan, :ram, :quota, :resolvers
 
       def initialize
         @hypervisor = UNSET_VALUE
