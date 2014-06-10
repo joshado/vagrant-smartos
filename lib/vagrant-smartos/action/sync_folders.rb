@@ -20,6 +20,9 @@ module VagrantPlugins
         def call(env)
           @app.call(env)
 
+          env[:machine].communicate.sudo(
+            "pkgin -yf install rsync")
+
           ssh_info = env[:machine].ssh_info
 
           env[:machine].config.vm.synced_folders.each do |id, data|
