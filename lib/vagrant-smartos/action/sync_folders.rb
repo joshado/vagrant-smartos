@@ -28,6 +28,9 @@ module VagrantPlugins
             # Ignore disabled shared folders
             next if data[:disabled]
 
+            env[:machine].communicate.sudo(
+              "pkgin -y install rsync")
+
             hostpath  = File.expand_path(data[:hostpath], env[:root_path])
             guestpath = data[:guestpath]
 
@@ -46,7 +49,7 @@ module VagrantPlugins
             command = [
               "rsync", "--verbose", "--archive", "-z",
               "--exclude", ".vagrant/",
-              "-e", "ssh -p #{ssh_info[:port]} -o StrictHostKeyChecking=no -i '#{ssh_info[:private_key_path]}'",
+              "-e", "ssh -p #{ssh_info[:port]} -o StrictHostKeyChecking=no -i '#{ssh_info[:private_key_path].first}'",
               hostpath,
               "#{ssh_info[:username]}@#{ssh_info[:host]}:#{guestpath}"]
 

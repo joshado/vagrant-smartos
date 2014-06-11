@@ -11,7 +11,7 @@ module VagrantPlugins
       # @return [String] UUID
       attr_accessor :image_uuid
 
-      attr_accessor :nic_tag, :ip_address, :subnet_mask, :gateway, :vlan, :ram, :quota
+      attr_accessor :nic_tag, :ip_address, :subnet_mask, :gateway, :vlan, :ram, :quota, :resolvers
 
       def initialize
         @hypervisor = UNSET_VALUE
@@ -23,6 +23,7 @@ module VagrantPlugins
         @vlan = UNSET_VALUE
         @ram = UNSET_VALUE
         @quota = UNSET_VALUE
+        @resolvers = UNSET_VALUE
         @__finalized = false
       end
 
@@ -36,6 +37,7 @@ module VagrantPlugins
         @vlan = nil if @vlan == UNSET_VALUE
         @ram = 256 if @ram == UNSET_VALUE
         @quota = 5 if @quota == UNSET_VALUE
+        @resolvers = ['8.8.8.8', '8.8.4.4'] if @resolvers == UNSET_VALUE
 
         # Mark that we finalized
         @__finalized = true
