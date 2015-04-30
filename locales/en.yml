@@ -2,6 +2,9 @@ en:
   vagrant_smartos:
 
     errors:
+      rsync: |-
+        Error when running rsync from %{hostpath} to %{guestpath}: %{stderr}
+
       vmadm: |-
         Error when running vmadm on the hypervisor: %{message}
 

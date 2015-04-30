@@ -11,6 +11,10 @@ module VagrantPlugins
         error_key(:vmadm)
       end
 
+      class RsyncError < VagrantSmartosError
+        error_key(:rsync)
+      end
+
     end
   end
 end
